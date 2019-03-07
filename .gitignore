@@ -1,0 +1,4 @@
+vendor
+composer.lock
+tasks.pyc
+__pycache__

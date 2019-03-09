@@ -5,7 +5,8 @@
     "prefer-stable": true,
     "require": {
         "php": ">=5.4.0",
-        "php-amqp": "*",
+        "ext-amqp": "*",
+        "php-amqplib/php-amqplib": "^2.8",
         "massivescale/celery-php": "2.1.*"
     }
 }

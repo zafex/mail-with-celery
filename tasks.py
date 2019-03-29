@@ -8,7 +8,7 @@ smtp_port = 465
 smtp_host = 'smtp.gmail.com'
 
 # create object celery
-app = Celery('tasks', broker = 'pyamqp://guest@localhost:5673//')
+app = Celery('tasks', broker = 'pyamqp://guest@localhost:5672//')
 
 # add worker name
 @app.task(name = 'send.email', bind = True, max_retries = 10)

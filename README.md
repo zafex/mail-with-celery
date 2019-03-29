@@ -19,7 +19,7 @@ celery -A tasks worker --loglevel=info
 ```
 run rabbit under docker
 ```bash
-docker run --rm -p 5673:5672 rabbitmq:3
+docker run --rm -p 5672:5672 rabbitmq:3
 ```
 
 visit http://localhost:9876/submit.php

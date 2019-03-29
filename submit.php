@@ -1,12 +1,38 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+/**
+ * see tasks.py
+ */
+class TaskPassenger extends Viloveul\Transport\Passenger
+{
+    public function handle(): void
+    {
+        // celery argument
+        $this->setArguments([
+            $_POST['email'],
+            $_POST['message'],
+        ]);
+    }
+
+    public function point(): string
+    {
+        // queue name
+        return 'celery';
+    }
+
+    public function task(): string
+    {
+        // celery task name
+        return 'send.email';
+    }
+}
+
 if (isset($_POST['email']) && isset($_POST['message'])) {
-	require __DIR__ . '/vendor/autoload.php';
-	// open connection to rabbitmq-server
-	$celery = new Celery('localhost', 'guest', 'guest', '/', 'celery', 'celery', 5673);
-	// send task to rabbitmq-server
-	$celery->PostTask('send.email', [$_POST['email'], $_POST['message']]);
-	// done, sisanya terserah worker (in case : celery)
+    $bus = new Viloveul\Transport\Bus();
+    $bus->setConnection('amqp://localhost:5672//');
+    $bus->process(new TaskPassenger());
 }
 
 ?>
